@@ -1,0 +1,19 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t ptviet/complex-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run ptviet/complex-test npm test -- --coverage
+
+after_success:
+  - docker build -t ptviet/complex-client ./client
+  - docker build -t ptviet/complex-nginx ./nginx
+  - docker build -t ptviet/complex-server ./server
+  - docker build -t ptviet/complex-worker ./worker
+
+# Login to docker cli
+
+# Push images to docker hub
