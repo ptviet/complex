@@ -13,7 +13,10 @@ after_success:
   - docker build -t ptviet/complex-nginx ./nginx
   - docker build -t ptviet/complex-server ./server
   - docker build -t ptviet/complex-worker ./worker
-
-# Login to docker cli
-
-# Push images to docker hub
+  # Login to docker cli
+  - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to docker hub
+  - docker push ptviet/complex-client
+  - docker push ptviet/complex-nginx
+  - docker push ptviet/complex-server
+  - docker push ptviet/complex-worker
